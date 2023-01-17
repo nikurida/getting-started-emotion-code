@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import logo from "./logo.png";
-import { css } from "@emotion/react";
+import { css, ThemeProvider } from "@emotion/react";
 import {
   CardWrapper,
   ImageWrapper,
@@ -8,9 +8,12 @@ import {
   TitleWrapper,
   DescriptionWrapper,
   ActionsWrapper,
-  Button,
+  PrimaryButton,
+  SecondaryButton,
+  theme,
+  LogoSpin,
 } from "./styles";
-// import styled components, theming and animation from "./styles.js" file
+
 
 const hotels = [
   {
@@ -39,12 +42,15 @@ const hotels = [
 // Apply styling to code within the `App` component's `return` statement using styled components, theming, animation and the `css` prop
 function App() {
   return (
-    <main css={{
-      color: "#03045e",
-      background: "#caf0f8",
-      height: "1200px",
-      fontFamily: "helvetica",
-    }}>
+    <ThemeProvider theme={theme}>
+      <main 
+        css = {(theme) => ({
+          color: theme.colors.primary,
+          background: theme.colors.secondary,
+          height: "1200px",
+          fontFamily: theme.fonts.primary,
+        })}
+      >
       <img
         src={logo}
         alt="logo"
@@ -54,6 +60,7 @@ function App() {
           margin-left: 15px;
           height: 100px;
           width: 100px;
+          animation: ${LogoSpin} 10s linear infinite;
         `}
       />
       <div  css={css`
@@ -75,14 +82,15 @@ function App() {
                 <DescriptionWrapper>{hotel.description}</DescriptionWrapper>
               </TextWrapper>
               <ActionsWrapper>
-                <Button>Details</Button>
-                <Button>Book</Button>
+                <PrimaryButton>Details</PrimaryButton>
+                <SecondaryButton>Book</SecondaryButton>
               </ActionsWrapper>
             </CardWrapper>
           );
         })}
       </div>
     </main>
+  </ThemeProvider>
   );
 }
 
